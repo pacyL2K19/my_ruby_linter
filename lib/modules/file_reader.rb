@@ -1,8 +1,9 @@
 require 'colorize'
 module FileReader
   def file_validator(file_path)
+    colores = "red"
     # p "One"
-    return " The specified file does not exist, pleqse enter a correct one ".colorize(:color => :white, :background => :red) unless File.exist?(file_path)
+    return " The specified file does not exist, pleqse enter a correct one ".colorize(:color => :white, :background => colores) unless File.exist?(file_path)
     # p "two"
     return " The file extension is not allowed, please put a .rb file to be checked ".colorize(:color => :white, :background => :red) unless File.extname(file_path) == ".rb"
     # p "Three"
