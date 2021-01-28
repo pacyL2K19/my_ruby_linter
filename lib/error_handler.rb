@@ -7,27 +7,27 @@ class ErrorHandler
         :indentation => {
             :err_message => "Identation errors",
             :type => "error",
-            :color => "red"
+            :color => :red
         },
         :traillig_spaces => {
             :err_message => "Trailling unecessary white space error",
             :type => "error",
-            :color => "red"
+            :color => :red
         },
         :tag => {
             :err_message => "Missing or unexpected tag",
             :type => "error",
-            :color => "red"
+            :color => :red
         },
         :bloc => {
             :err_message => "Bloc not closed error",
             :type => "error",
-            :color => "red"
+            :color => :red
         },
         :empty_space => {
             :err_message => "Empty space error in your code",
             :type => "warning",
-            :color => "yellow"
+            :color => :yellow
         }
     }
   end
