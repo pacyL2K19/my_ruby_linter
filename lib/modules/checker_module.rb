@@ -16,7 +16,13 @@ module Checker_Module
   end
 
   def check_curly_brackets(line)
-    return ['{', '}'] if line.count('{') < line.count('}') || line.count('{') > line.count('}')
+    return {:error => :tag} if line.count('{') < line.count('}') || line.count('{') > line.count('}')
+  end
+  def check_white_space(line)
+    return {:error => :traillig_spaces} if line.end
+  end
+  def check_empty_line(line)
+    return {:error => :empty_space} if line.eql?('')
   end
 end
 

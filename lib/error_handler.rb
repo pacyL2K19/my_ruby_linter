@@ -32,7 +32,7 @@ class ErrorHandler
             :color => :red,
             :line => 0
         },
-        :empty_space => {
+        :empty_line => {
             :err_message => "Empty space error in your code",
             :type => "warning",
             :color => :yellow,
