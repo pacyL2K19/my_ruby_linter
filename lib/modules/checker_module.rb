@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Checker_Module
-  def is_block?
+  def block?
     if strip.start_with?('if', 'def', 'while', 'until', 'module', 'unless') || strip.end_with?('do') ||
        (strip.end_with?('|') && !(/(do)(\s+)(\|)/ =~ self).nil?)
       return true

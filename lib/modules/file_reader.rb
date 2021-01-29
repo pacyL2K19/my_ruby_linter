@@ -1,5 +1,6 @@
 # frozen_string_literal: true
-# rubocop:disable Metrics/ClassLength
+# rubocop:disable Metrics/MethodLength
+
 require 'colorize'
 module FileReader
   def file_validator(file_path)
@@ -17,4 +18,4 @@ module FileReader
     true
   end
 end
-# rubocop:enable Metrics/ClassLength
+# rubocop:enable Metrics/MethodLength

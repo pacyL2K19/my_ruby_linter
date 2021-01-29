@@ -2,6 +2,7 @@
 
 # rubocop:disable Metrics/ClassLength
 # rubocop:disable Style/Documentation
+# rubocop:disable Metrics/AbcSize
 
 require_relative './modules/checker_module'
 require_relative './modules/file_reader'
@@ -132,3 +133,4 @@ class Checker
 end
 # rubocop:enable Metrics/ClassLength
 # rubocop:enable Style/Documentation
+# rubocop:enable Metrics/AbcSize
