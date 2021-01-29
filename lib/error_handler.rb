@@ -1,8 +1,4 @@
-# frozen_string_literal: true
-
 require_relative './modules/file_reader'
-# rubocop:disable Style/Documentation
-# rubocop:disable Metrics/MethodLength
 class ErrorHandler
   include FileReader
 
@@ -54,5 +50,3 @@ class ErrorHandler
     FileReader.file_validator(file_path)
   end
 end
-# rubocop:enable Style/Documentation
-# rubocop:enable Metrics/MethodLength

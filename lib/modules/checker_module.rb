@@ -1,7 +1,3 @@
-# frozen_string_literal: true
-
-# rubocop:disable Style/Documentation
-
 module CheckerModule
   def block?
     if strip.start_with?('if', 'def', 'while', 'until', 'module', 'unless') || strip.end_with?('do') ||
@@ -36,4 +32,3 @@ end
 class String
   include Linter_Module
 end
-# rubocop:enable Style/Documentation

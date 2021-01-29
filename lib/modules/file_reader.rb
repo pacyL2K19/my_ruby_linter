@@ -1,8 +1,3 @@
-# frozen_string_literal: true
-
-# rubocop:disable Metrics/MethodLength
-# rubocop:disable Style/Documentation
-
 require 'colorize'
 module FileReader
   def file_validator(file_path)
@@ -20,5 +15,3 @@ module FileReader
     true
   end
 end
-# rubocop:enable Metrics/MethodLength
-# rubocop:enable Style/Documentation

@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 require 'colorize'
 require_relative '../lib/checker'
 require_relative '../lib/error_handler'

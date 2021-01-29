@@ -1,10 +1,3 @@
-# frozen_string_literal: true
-
-# rubocop:disable Metrics/ClassLength
-# rubocop:disable Style/Documentation
-# rubocop:disable Metrics/AbcSize
-# rubocop:disable Metrics/MethodLength
-
 require_relative './modules/checker_module'
 require_relative './modules/file_reader'
 class Checker
@@ -36,7 +29,6 @@ class Checker
     block_length
   end
 
-  # rubocop:disable Metrics/CyclomaticComplexity
   # rubocop:disable Layout/LineLength
 
   def check_indentation
@@ -49,7 +41,6 @@ class Checker
     @line_indentation_errors
   end
 
-  # rubocop:enable Metrics/CyclomaticComplexity
   # rubocop:enable Layout/LineLength
 
   private
@@ -82,9 +73,7 @@ class Checker
   # rubocop:disable Style/GuardClause
 
   def line_length_validate(ret, line, index)
-    if line.length >= @line_length
-      ret << ["Line #{index + 1} doesn't satisfy the maximum line length of #{@line_length}"]
-    end
+    ret << ["Line #{index + 1} doesn't satisfy the maximum line length of #{@line_length}"] if line.length >= @line_length
   end
 
   def trailing_space_validate(ret, line, index)
@@ -132,7 +121,3 @@ class Checker
     end
   end
 end
-# rubocop:enable Metrics/ClassLength
-# rubocop:enable Style/Documentation
-# rubocop:enable Metrics/AbcSize
-# rubocop:enable Metrics/MethodLength
