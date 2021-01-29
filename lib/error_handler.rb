@@ -2,6 +2,7 @@
 
 require_relative './modules/file_reader'
 # rubocop:disable Style/Documentation
+# rubocop:disable Metrics/MethodLength
 class ErrorHandler
   include FileReader
 
@@ -54,3 +55,4 @@ class ErrorHandler
   end
 end
 # rubocop:enable Style/Documentation
+# rubocop:enable Metrics/MethodLength

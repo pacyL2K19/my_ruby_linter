@@ -1,5 +1,7 @@
 # frozen_string_literal: true
+
 # rubocop:disable Metrics/MethodLength
+# rubocop:disable Style/Documentation
 
 require 'colorize'
 module FileReader
@@ -19,3 +21,4 @@ module FileReader
   end
 end
 # rubocop:enable Metrics/MethodLength
+# rubocop:enable Style/Documentation

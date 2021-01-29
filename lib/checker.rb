@@ -3,11 +3,12 @@
 # rubocop:disable Metrics/ClassLength
 # rubocop:disable Style/Documentation
 # rubocop:disable Metrics/AbcSize
+# rubocop:disable Metrics/MethodLength
 
 require_relative './modules/checker_module'
 require_relative './modules/file_reader'
 class Checker
-  include Checker_Module
+  include CheckerModule
 
   attr_reader :block_not_closed, :operator_spacing_errors, :empty_line_eof_errors, :line_indentation_errors, :lines,
               :block_dictionary, :missing_parenthesis, :block_errors, :trailing_space_errors
@@ -134,3 +135,4 @@ end
 # rubocop:enable Metrics/ClassLength
 # rubocop:enable Style/Documentation
 # rubocop:enable Metrics/AbcSize
+# rubocop:enable Metrics/MethodLength
