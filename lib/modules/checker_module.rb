@@ -18,12 +18,15 @@ module Checker_Module
   def check_curly_brackets(line)
     return {:error => :tag} if line.count('{') < line.count('}') || line.count('{') > line.count('}')
   end
-  def check_white_space(line)
-    return {:error => :traillig_spaces} if line.end
+
+  def trailing_space_validate(ret_arr, line, index)
+    return {:error => :traillig_spaces} if line.end_with?(' ')
   end
-  def check_empty_line(line)
-    return {:error => :empty_space} if line.eql?('')
+
+  def empty_line_eof
+    return {:error => :empty_line} if @arr[-1].strip != ''
   end
+
 end
 
 class String
