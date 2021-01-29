@@ -1,9 +1,15 @@
+# frozen_string_literal: true
+
+# rubocop:disable Metrics/ClassLength
+# rubocop:disable Style/Documentation
+
 require_relative './modules/checker_module'
 require_relative './modules/file_reader'
 class Checker
   include Checker_Module
 
-  attr_reader :block_not_closed, :operator_spacing_errors, :empty_line_eof_errors, :line_indentation_errors, :lines, :block_dictionary, :missing_parenthesis, :block_errors, :trailing_space_errors
+  attr_reader :block_not_closed, :operator_spacing_errors, :empty_line_eof_errors, :line_indentation_errors, :lines,
+              :block_dictionary, :missing_parenthesis, :block_errors, :trailing_space_errors
 
   def initialize(lines, indentation)
     @lines = lines
@@ -18,7 +24,7 @@ class Checker
     check_indentation
   end
 
-  def validate(answer)
+  def validate(_answer)
     empty_line_eof
     @lines.each_with_index do |n, i|
       parenthesis(@missing_parenthesis, n, i)
@@ -29,7 +35,6 @@ class Checker
   end
 
   # rubocop:disable Metrics/CyclomaticComplexity
-  # rubocop:disable Metrics/PerceivedComplexity
   # rubocop:disable Layout/LineLength
 
   def check_indentation
@@ -43,7 +48,6 @@ class Checker
   end
 
   # rubocop:enable Metrics/CyclomaticComplexity
-  # rubocop:enable Metrics/PerceivedComplexity
   # rubocop:enable Layout/LineLength
 
   private
@@ -126,3 +130,5 @@ class Checker
     end
   end
 end
+# rubocop:enable Metrics/ClassLength
+# rubocop:enable Style/Documentation
