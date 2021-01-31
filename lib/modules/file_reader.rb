@@ -2,6 +2,7 @@ require 'colorize'
 module FileReader
   def file_validator(file_path)
     danger = :red
+    warning = :yellow
     unless File.exist?(file_path)
       return ' The specified file does not exist, pleqse enter a correct one '.colorize(color: :white,
                                                                                         background: danger)
@@ -10,7 +11,7 @@ module FileReader
       return ' The file extension is not allowed, please put a .rb file to be checked '.colorize(color: :white,
                                                                                                  background: danger)
     end
-    return ' This file is empty '.colorize(color: :white, background: danger) unless File.zero?(file_path)
+    return ' This file is empty '.colorize(color: :white, background: warning) unless File.zero?(file_path)
 
     true
   end
