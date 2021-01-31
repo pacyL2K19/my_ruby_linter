@@ -1,8 +1,10 @@
 require_relative './modules/checker_module'
 require_relative './modules/file_reader'
 require_relative './error_handler'
+
 class Checker
   include CheckerModule
+  errorHolder = ErrorHandler.new()
 
   attr_reader :lines
 
@@ -12,7 +14,7 @@ class Checker
     check_indentation
   end
 
-  def validate(_answer)
+  def validate
     empty_line_eof
     @lines.each_with_index do |n, i|
       parenthesis(@missing_parenthesis, n, i)
@@ -24,13 +26,10 @@ class Checker
 
   # rubocop:disable Layout/LineLength
 
-  def check_indentation
+  def check_indentation(errHolder)
     count = 0
     @lines.each_with_index do |line, index|
-
-      # @line_indentation_errors << "Line #{index + 1} should have #{count * @indentation} spaces" unless line.start_with?(' ' * (count * @indentation)) || line.strip == '' || (line.strip == 'end' && line.start_with?(' ' * [0, (count - 1)].max * @indentation))
-      # count += 1 if line.block?
-      # count -= 1 if line.strip == 'end'
+      errHolder.catch_err_warn("warning", "should have #{count * @indentation} spaces", index+1) unless line.start_with?(' ' * (count * @indentation)) || line.strip == '' || (line.strip == 'end' && line.start_with?(' ' * [0, (count - 1)].max * @indentation))
     end
     @line_indentation_errors
   end
@@ -78,7 +77,7 @@ class Checker
     ret << ["Line #{index + 1} is preceded by another empty line"] if line == '' && @arr[index - 1] == ''
   end
 
-  def parenthesis(ret, line, index)
+  def parenthesis(err, war, line, index)
     unless parenthesis_even(line).nil?
       ret << "Line #{index + 1} has more '#{parenthesis_even(line)[1]}' than '#{parenthesis_even(line)[0]}'"
     end
