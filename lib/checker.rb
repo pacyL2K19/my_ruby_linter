@@ -1,21 +1,14 @@
 require_relative './modules/checker_module'
 require_relative './modules/file_reader'
+require_relative './error_handler'
 class Checker
   include CheckerModule
 
-  # attr_reader :block_not_closed, :operator_spacing_errors, :empty_line_eof_errors, :line_indentation_errors, :lines,
-  #             :block_dictionary, :missing_parenthesis, :block_errors, :trailing_space_errors
+  attr_reader :lines
 
   def initialize(lines, indentation)
     @lines = lines
     @indentation = indentation
-    # @block_dictionary = []
-    # @miss_parenthesis = []
-    # @block_errors = []
-    # @trailing_space_errors = []
-    # @line_indentation_errors = []
-    # @empty_line_eof_errors = []
-    # @block_not_closed = []
     check_indentation
   end
 
@@ -34,7 +27,7 @@ class Checker
   def check_indentation
     count = 0
     @lines.each_with_index do |line, index|
-      
+
       # @line_indentation_errors << "Line #{index + 1} should have #{count * @indentation} spaces" unless line.start_with?(' ' * (count * @indentation)) || line.strip == '' || (line.strip == 'end' && line.start_with?(' ' * [0, (count - 1)].max * @indentation))
       # count += 1 if line.block?
       # count -= 1 if line.strip == 'end'
