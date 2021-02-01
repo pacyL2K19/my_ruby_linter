@@ -20,7 +20,7 @@ else
   checker.validate(errorHandler)
   checker.check_indentation(errorHandler)
   checker.empty_line_eof(errorHandler)
-  checker.lines.times do |i|
+  checker.lines.size.times do |i|
     checker.trailing_space(errorHandler, checker.lines[i], i)
     checker.multiple_empty_lines(errorHandler, checker.lines[i], i)
     checker.parenthesis(errorHandler, checker.lines[i], i)
@@ -33,10 +33,12 @@ else
   elsif errorHandler.errors.size == 0
     message = "0 ERROR FOUND IN YOUR CODE, #{errorHandler.warnings.size} WARNING FOUND".colorize(color: :yellow)
   else
-    message = "#{errorHandler.errors.size} ERRORS FOUND IN YOUR FILE NEED TO BE FIXED, #{error_handler.warnings.size} WARNINGS FOUND".colorize(color: :red)
+    message = "#{errorHandler.errors.size} ERRORS FOUND IN YOUR FILE NEED TO BE FIXED, #{errorHandler.warnings.size} WARNINGS FOUND".colorize(color: :red)
   end
 
   puts message
+  puts errorHandler.errors
+  puts errorHandler.warnings
 
   # puts 'Incorect Indentation' if checker.line_indentation_errors != []
   # if answer == 'Y'

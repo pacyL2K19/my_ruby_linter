@@ -2,12 +2,11 @@ require_relative './modules/checker_module'
 require_relative './modules/file_reader'
 class Checker
   include CheckerModule
-  attr_reader :lines
+  attr_reader :lines, :indentation
 
   def initialize(lines, indentation)
     @lines = lines
     @indentation = indentation
-    check_indentation
     reset
   end
 
@@ -15,10 +14,9 @@ class Checker
     empty_line_eof(errHandler)
     @lines.each_with_index do |n, i|
       parenthesis(errHandler, n, i)
-      trailing_space_validate(errHandler, n, i)
-      multiple_empty_lines_validate(errHandler, n, i)
+      trailing_space(errHandler, n, i)
+      multiple_empty_lines(errHandler, n, i)
     end
-    block_length
   end
 
   # rubocop:disable Layout/LineLength
@@ -27,6 +25,8 @@ class Checker
     count = 0
     @lines.each_with_index do |line, index|
       errHolder.catch_err_warn("warning", "should have #{@indentation} spaces", index+1) unless line.start_with?(' ' * (count * @indentation)) || line.strip == '' || (line.strip == 'end' && line.start_with?(' ' * [0, (count - 1)].max * @indentation))
+      count += 1 if line.block?
+      count -= 1 if line.strip == 'end'
     end
   end
 
@@ -65,13 +65,13 @@ class Checker
 
   public
   def parenthesis(errHandler, line, index)
-    if parenthesis_even(line) != true
+    if check_parentesis(line) != true
       errHolder.catch_err_warn("error", "you have an odd number of parenthesis", index+1)
     end
-    if brackets_even(line) != true
+    if check_brackets(line) != true
       errHolder.catch_err_warn("error", "you have an odd number of brackets", index+1)
     end
-    unless curly_brackets_even(line) != true
+    unless check_curly_brackets(line) != true
       errHandler.catch_err_warn("error", "you have an odd number of curly brackets", index+1)
     end
   end
