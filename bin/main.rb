@@ -19,8 +19,8 @@ else
     checker.indentation_autocorrect
     File.open(file, 'w') do |f|
       checker.arr.each do |n|
-        f.puts n
-      end
+        f.puts 
+      endn
     end
   end
   checker.validate

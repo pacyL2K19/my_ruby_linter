@@ -4,7 +4,7 @@ require_relative './error_handler'
 
 class Checker
   include CheckerModule
-  errorHolder = ErrorHandler.new()
+  # errorHolder = ErrorHandler.new()
 
   attr_reader :lines
 
@@ -42,63 +42,51 @@ class Checker
     @warning = []
   end
 
-  def block_dictionary_creator(ret, line, index)
-    if line.block?
-      ret << [index + 1, (line.length - line.lstrip.length) / @indentation]
-    elsif line.include?('end')
-      ret.reverse.each do |m|
-        if m.length == 2 && ((line.length - line.lstrip.length) / @indentation) == m[1]
-          m << (index + 1)
-          break
-        end
-      end
-    end
-    ret
-  end
+  # def block_dictionary_creator(ret, line, index)
+  #   if line.block?
+  #     ret << [index + 1, (line.length - line.lstrip.length) / @indentation]
+  #   elsif line.include?('end')
+  #     ret.reverse.each do |m|
+  #       if m.length == 2 && ((line.length - line.lstrip.length) / @indentation) == m[1]
+  #         m << (index + 1)
+  #         break
+  #       end
+  #     end
+  #   end
+  #   ret
+  # end
   # rubocop:disable Style/GuardClause
 
-  def trailing_space_validate(ret, line, index)
+  def trailing_space_validate(errHolder, line, index)
     errHolder.catch_err_warn("error", "ends with trailing space", index+1) if line.end_with?(' ')
   end
 
-  def multiple_empty_lines_validate(ret, line, index)
-    ret << ["Line #{index + 1} is preceded by another empty line"] if line == '' && @arr[index - 1] == ''
+  def multiple_empty_lines_validate(errorHolder, line, index)
+    errHolder.catch_err_warn("error", "preceded by another empty line", index+1) if line == '' && @lines[index - 1] == ''
   end
 
-  def parenthesis(err, war, line, index)
-    unless parenthesis_even(line).nil?
-      ret << "Line #{index + 1} has more '#{parenthesis_even(line)[1]}' than '#{parenthesis_even(line)[0]}'"
+  def parenthesis(errHandler, war, line, index)
+    if parenthesis_even(line) != true
+      errHolder.catch_err_warn("error", "you have an odd number of parenthesis", index+1)
     end
-    unless brackets_even(line).nil?
-      ret << "Line #{index + 1} has more '#{brackets_even(line)[1]}' than '#{brackets_even(line)[0]}'"
+    if brackets_even(line) != true
+      errHolder.catch_err_warn("error", "you have an odd number of brackets", index+1)
     end
-    unless curly_brackets_even(line).nil?
-      ret << "Line #{index + 1} has more '#{curly_brackets_even(line)[1]}' than '#{curly_brackets_even(line)[0]}'"
+    unless curly_brackets_even(line) != true
+      errHandler.catch_err_warn("error", "you have an odd number of curly brackets", index+1)
     end
   end
   # rubocop:enable Style/GuardClause
 
-  def empty_line_eof
-    @empty_line_eof_errors << 'File should end with an empty line' if @arr[-1].strip != ''
+  def empty_line_eof(errHandler)
+    errHandler.catch_err_warn("warning", "File should have an empty line at the end", 0)
   end
 
-  def space_around_operators(ret, line, index)
-    lines = operator_validator(line)
-    lines.each_with_index do |n, i|
-      lines[i] = yield(n) if block_given?
-      ret << "Line #{index + 1} has wrong spacing around operator #{n[0]}" unless n[1] == -1 && n[2] == -1
-    end
-  end
-
-  def block_length
-    @block_dictionary.each do |block|
-      if block.length < 3
-        @block_not_closed << "Block starting on line #{block[0]} is not closed"
-      elsif @lines[block[0] - 1].start_with?('class') && block[2] - block[0] > @class_length
-        @block_errors << "Block starting at #{block[0]} doesn't satisfy the maximum class length of #{@class_length}"
-      elsif block[2] - block[0] > @block_length
-        @block_errors << "Block starting at #{block[0]} doesn't satisfy the maximum block length of #{@class_length}"
-      end
-    end
-  end
+  # def block_length
+  #   @block_dictionary.each do |block|
+  #     if block.length < 3
+  #       @block_not_closed << "Block starting on line #{block[0]} is not closed"
+  #     end
+  #   end
+  # end
 end
