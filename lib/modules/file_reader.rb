@@ -11,7 +11,7 @@ module FileReader
       return ' The file extension is not allowed, please put a .rb file to be checked '.colorize(color: :white,
                                                                                                  background: danger)
     end
-    return ' This file is empty '.colorize(color: :black, background: warning) unless File.size(file_path) == 0
+    return ' This file is empty '.colorize(color: :black, background: warning) if File.zero?(file_path)
 
     true
   end
