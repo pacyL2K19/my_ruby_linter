@@ -1,25 +1,22 @@
 require_relative './modules/checker_module'
 require_relative './modules/file_reader'
-require_relative './error_handler'
-
 class Checker
   include CheckerModule
-  # errorHolder = ErrorHandler.new()
-
   attr_reader :lines
 
   def initialize(lines, indentation)
     @lines = lines
     @indentation = indentation
     check_indentation
+    reset
   end
 
-  def validate
-    empty_line_eof
+  def validate(errHandler)
+    empty_line_eof(errHandler)
     @lines.each_with_index do |n, i|
-      parenthesis(@missing_parenthesis, n, i)
-      trailing_space_validate(@trailing_space_errors, n, i)
-      multiple_empty_lines_validate(@multiple_empty_lines_errors, n, i)
+      parenthesis(errHandler, n, i)
+      trailing_space_validate(errHandler, n, i)
+      multiple_empty_lines_validate(errHandler, n, i)
     end
     block_length
   end
@@ -29,7 +26,7 @@ class Checker
   def check_indentation(errHolder)
     count = 0
     @lines.each_with_index do |line, index|
-      errHolder.catch_err_warn("warning", "should have #{count * @indentation} spaces", index+1) unless line.start_with?(' ' * (count * @indentation)) || line.strip == '' || (line.strip == 'end' && line.start_with?(' ' * [0, (count - 1)].max * @indentation))
+      errHolder.catch_err_warn("warning", "should have #{@indentation} spaces", index+1) unless line.start_with?(' ' * (count * @indentation)) || line.strip == '' || (line.strip == 'end' && line.start_with?(' ' * [0, (count - 1)].max * @indentation))
     end
   end
 
@@ -56,16 +53,18 @@ class Checker
   #   ret
   # end
   # rubocop:disable Style/GuardClause
-
-  def trailing_space_validate(errHolder, line, index)
+  public
+  def trailing_space(errHolder, line, index)
     errHolder.catch_err_warn("error", "ends with trailing space", index+1) if line.end_with?(' ')
   end
 
-  def multiple_empty_lines_validate(errorHolder, line, index)
+  public
+  def multiple_empty_lines(errorHolder, line, index)
     errHolder.catch_err_warn("error", "preceded by another empty line", index+1) if line == '' && @lines[index - 1] == ''
   end
 
-  def parenthesis(errHandler, war, line, index)
+  public
+  def parenthesis(errHandler, line, index)
     if parenthesis_even(line) != true
       errHolder.catch_err_warn("error", "you have an odd number of parenthesis", index+1)
     end
@@ -79,7 +78,7 @@ class Checker
   # rubocop:enable Style/GuardClause
 
   def empty_line_eof(errHandler)
-    errHandler.catch_err_warn("warning", "File should have an empty line at the end", 0)
+    errHandler.catch_err_warn("warning", "File should have an empty line at the end", 0) if @lines[-1].strip != ''
   end
 
   # def block_length
