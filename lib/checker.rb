@@ -31,7 +31,6 @@ class Checker
     @lines.each_with_index do |line, index|
       errHolder.catch_err_warn("warning", "should have #{count * @indentation} spaces", index+1) unless line.start_with?(' ' * (count * @indentation)) || line.strip == '' || (line.strip == 'end' && line.start_with?(' ' * [0, (count - 1)].max * @indentation))
     end
-    @line_indentation_errors
   end
 
   # rubocop:enable Layout/LineLength
@@ -39,15 +38,8 @@ class Checker
   private
 
   def reset
-    @missing_parenthesis = []
-    @line_length_errors = []
-    @block_errors = []
-    @trailing_space_errors = []
-    @multiple_empty_lines_errors = []
-    @line_indentation_errors = []
-    @empty_line_eof_errors = []
-    @block_dictionary = []
-    @block_not_closed = []
+    @errors = []
+    @warning = []
   end
 
   def block_dictionary_creator(ret, line, index)
@@ -65,12 +57,8 @@ class Checker
   end
   # rubocop:disable Style/GuardClause
 
-  def line_length_validate(ret, line, index)
-    ret << ["Line #{index + 1} doesn't satisfy the maximum line length of #{@line_length}"] if line.length >= @line_length
-  end
-
   def trailing_space_validate(ret, line, index)
-    ret << ["Line #{index + 1} ends with trailing space"] if line.end_with?(' ')
+    errHolder.catch_err_warn("error", "ends with trailing space", index+1) if line.end_with?(' ')
   end
 
   def multiple_empty_lines_validate(ret, line, index)
