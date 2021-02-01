@@ -35,5 +35,5 @@ module CheckerModule
 end
 
 class String
-  include Linter_Module
+  include CheckerModule
 end
