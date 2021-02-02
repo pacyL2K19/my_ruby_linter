@@ -1,3 +1,4 @@
+require 'colorize'
 require_relative './modules/checker_module'
 require_relative './modules/file_reader'
 class Checker
@@ -27,7 +28,7 @@ class Checker
       errHolder.catch_err_warn("warning", "should have #{@indentation} spaces", index+1) unless line.start_with?(' ' * (count * @indentation)) || line.strip == '' || (line.strip == 'end' && line.start_with?(' ' * [0, (count - 1)].max * @indentation))
       count += 1 if block?(line)
       count -= 1 if line.strip == 'end'
-      puts count
+      count = 0 if count.negative?
     end
   end
 
@@ -73,15 +74,14 @@ class Checker
     if check_brackets(line) != true
       errHolder.catch_err_warn("error", "you have an odd number of brackets", index+1)
     end
-    unless check_curly_brackets(line) != true
+    if check_curly_brackets(line) != true
       errHandler.catch_err_warn("error", "you have an odd number of curly brackets", index+1)
     end
   end
   # rubocop:enable Style/GuardClause
 
   def empty_line_eof(errHandler)
-    errHandler.catch_err_warn("warning", "File should have an empty line at the end", 0) if @lines[-1].strip != ''
-    # puts @lines[-1] if @lines[-1].strip != ''
+    errHandler.catch_err_warn("warning", "File should have an empty line at the end", @lines.size) if @lines[-1].strip != ''
   end
 
   # def block_length
