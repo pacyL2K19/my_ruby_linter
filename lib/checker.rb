@@ -29,6 +29,7 @@ class Checker
       count += 1 if block?(line)
       count -= 1 if line.strip == 'end'
       count = 0 if count.negative?
+      puts count
     end
   end
 
@@ -68,13 +69,13 @@ class Checker
 
   public
   def parenthesis(errHandler, line, index)
-    if check_parentesis(line) != true
+    if !check_parentesis(line)
       errHandler.catch_err_warn("error", "you have an odd number of parenthesis", index+1)
     end
-    if check_brackets(line) != true
+    if !check_brackets(line)
       errHandler.catch_err_warn("error", "you have an odd number of brackets", index+1)
     end
-    if check_curly_brackets(line) != true
+    if !check_curly_brackets(line)
       errHandler.catch_err_warn("error", "you have an odd number of curly brackets", index+1)
     end
   end
