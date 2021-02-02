@@ -1,7 +1,6 @@
 module CheckerModule
-  def block?
-    if strip.start_with?('if', 'def', 'while', 'until', 'module', 'unless') || strip.end_with?('do') ||
-       (strip.end_with?('|') && !(/(do)(\s+)(\|)/ =~ self).nil?)
+  def block?(line)
+    if line.start_with?('if', 'def', 'while', 'until', 'module', 'unless', 'class', 'elsif', 'else') || line.end_with?('do') || (line.end_with?('|') && !(/(do)(\s+)(\|)/ =~ self).nil?)
       return true
     end
 
@@ -28,9 +27,9 @@ module CheckerModule
     return false
   end
 
-  def empty_line_eof
-    return false if @arr[-1].strip != ''
-    return false
+  def empty_line_eof(lines)
+    return false if lines[-1].strip != ''
+    return true
   end
 end
 

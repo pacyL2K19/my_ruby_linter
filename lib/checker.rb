@@ -25,8 +25,9 @@ class Checker
     count = 0
     @lines.each_with_index do |line, index|
       errHolder.catch_err_warn("warning", "should have #{@indentation} spaces", index+1) unless line.start_with?(' ' * (count * @indentation)) || line.strip == '' || (line.strip == 'end' && line.start_with?(' ' * [0, (count - 1)].max * @indentation))
-      count += 1 if line.block?
+      count += 1 if block?(line)
       count -= 1 if line.strip == 'end'
+      puts count
     end
   end
 
@@ -63,7 +64,7 @@ class Checker
   def multiple_empty_lines(errorHolder, line, index)
     errHolder.catch_err_warn("error", "preceded by another empty line", index+1) if line == '' && @lines[index - 1] == ''
   end
-#  [] 
+
   public
   def parenthesis(errHandler, line, index)
     if check_parentesis(line) != true
@@ -80,6 +81,7 @@ class Checker
 
   def empty_line_eof(errHandler)
     errHandler.catch_err_warn("warning", "File should have an empty line at the end", 0) if @lines[-1].strip != ''
+    # puts @lines[-1] if @lines[-1].strip != ''
   end
 
   # def block_length
