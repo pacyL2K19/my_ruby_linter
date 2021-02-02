@@ -52,6 +52,7 @@ class Checker
   #   end
   #   ret
   # end
+
   # rubocop:disable Style/GuardClause
   public
   def trailing_space(errHolder, line, index)
@@ -62,7 +63,7 @@ class Checker
   def multiple_empty_lines(errorHolder, line, index)
     errHolder.catch_err_warn("error", "preceded by another empty line", index+1) if line == '' && @lines[index - 1] == ''
   end
-
+#  [] 
   public
   def parenthesis(errHandler, line, index)
     if check_parentesis(line) != true
