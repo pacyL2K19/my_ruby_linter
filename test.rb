@@ -1,6 +1,6 @@
-class Test
+  class Test
   def method
-    puts ''
+    puts ""
   end
 end
 

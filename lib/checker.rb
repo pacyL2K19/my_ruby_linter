@@ -69,10 +69,10 @@ class Checker
   public
   def parenthesis(errHandler, line, index)
     if check_parentesis(line) != true
-      errHolder.catch_err_warn("error", "you have an odd number of parenthesis", index+1)
+      errHandler.catch_err_warn("error", "you have an odd number of parenthesis", index+1)
     end
     if check_brackets(line) != true
-      errHolder.catch_err_warn("error", "you have an odd number of brackets", index+1)
+      errHandler.catch_err_warn("error", "you have an odd number of brackets", index+1)
     end
     if check_curly_brackets(line) != true
       errHandler.catch_err_warn("error", "you have an odd number of curly brackets", index+1)

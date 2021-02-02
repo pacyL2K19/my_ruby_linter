@@ -16,16 +16,7 @@ if errorHandler.valid_file?(file) != true
 else
   checker = Checker.new(File.readlines(file).map(&:chomp), indentation)
   puts ''
-
   checker.validate(errorHandler)
-  checker.check_indentation(errorHandler)
-  checker.empty_line_eof(errorHandler)
-  checker.lines.size.times do |i|
-    checker.trailing_space(errorHandler, checker.lines[i], i)
-    checker.multiple_empty_lines(errorHandler, checker.lines[i], i)
-    checker.parenthesis(errorHandler, checker.lines[i], i)
-  end
-
   message = ""
 
   if errorHandler.errors.size == 0 && errorHandler.warnings.size == 0
