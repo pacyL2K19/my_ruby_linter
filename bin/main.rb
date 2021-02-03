@@ -11,29 +11,29 @@ puts 'Please put the path to the file to be checked'
 
 file = gets.chomp
 
-errorHandler = ErrorHandler.new()
+error_handler = ErrorHandler.new
 
-if errorHandler.valid_file?(file) != true
-  puts errorHandler.valid_file?(file)
+if error_handler.valid_file?(file) != true
+  puts error_handler.valid_file?(file)
 else
   checker = Checker.new(File.readlines(file).map(&:chomp), indentation)
   puts ''
-  checker.validate(errorHandler)
-  message = ""
+  checker.validate(error_handler)
+  message = ''
 
-  if errorHandler.errors.size == 0 && errorHandler.warnings.size == 0
-    message = "0 ERROR 0 WARNING FOUND IN YOUR FILE".colorize(color: :green)
-  elsif errorHandler.errors.size == 0
-    message = "0 ERROR FOUND IN YOUR CODE, #{errorHandler.warnings.size} WARNING FOUND".colorize(color: :yellow)
+  if error_handler.errors.size.zero? && error_handler.warnings.size.zero?
+    message = '0 ERROR 0 WARNING FOUND IN YOUR FILE'.colorize(color: :green)
+  elsif error_handler.errors.size.zero?
+    message = "0 ERROR FOUND IN YOUR CODE, #{error_handler.warnings.size} WARNING FOUND".colorize(color: :yellow)
   else
-    message = "#{errorHandler.errors.size} ERRORS FOUND IN YOUR FILE NEED TO BE FIXED, #{errorHandler.warnings.size} WARNINGS FOUND".colorize(color: :red)
+    message = "#{error_handler.errors.size} ERRORS FOUND IN YOUR FILE NEED TO BE FIXED, #{error_handler.warnings.size} WARNINGS FOUND".colorize(color: :red)
   end
 
-  errorHandler.errors.each do |err|
+  error_handler.errors.each do |err|
     puts "[ #{err[:type].upcase} ] On the line #{err[:line]} #{err[:message]}".colorize(color: err[:color])
   end
 
-  errorHandler.warnings.each do |war|
+  error_handler.warnings.each do |war|
     puts "[ #{war[:type].upcase} ] On the line #{war[:line]} #{war[:message]}".colorize(color: war[:color])
   end
 

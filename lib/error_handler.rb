@@ -22,15 +22,16 @@ class ErrorHandler
 
   def catch_err_warn(type, message, line)
     color = type == 'error' ? :red : :yellow
-    new_error= {
-      :type => type,
-      :color => color,
-      :message => message,
-      :line => line
+    new_error = {
+      type: type,
+      color: color,
+      message: message,
+      line: line
     }
-    if type == 'error'
+    case type
+    when 'error'
       @errors << new_error
-    elsif type == 'warning'
+    when 'warning'
       @warnings << new_error
     end
   end
