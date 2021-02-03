@@ -1,6 +1,6 @@
 module CheckerModule
   def block?(line)
-    if line.start_with?('if', 'def', 'while', 'until', 'module', 'unless', 'class', 'elsif', 'else') || line.end_with?('do') || (line.end_with?('|') && !(/(do)(\s+)(\|)/ =~ self).nil?)
+    if line.strip.start_with?('if', 'def', 'while', 'until', 'module', 'unless', 'class', 'elsif', 'else') || line.end_with?('do') || (line.end_with?('|') && !(/(do)(\s+)(\|)/ =~ self).nil?)
       return true
     end
 

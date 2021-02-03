@@ -27,9 +27,21 @@ else
     message = "#{errorHandler.errors.size} ERRORS FOUND IN YOUR FILE NEED TO BE FIXED, #{errorHandler.warnings.size} WARNINGS FOUND".colorize(color: :red)
   end
 
+  # erro = {
+  #   color: :red,
+  #   message: "Shows error"
+  # }
+
+  # puts "#{erro[:message]}".colorize(color: erro[:color])
+
+  errorHandler.errors.each do |err|
+    puts "[ #{err[:type].upcase} ] On the line #{err[:line]} #{err[:message]}".colorize(color: err[:color])
+  end
+
+  errorHandler.warnings.each do |war|
+    puts "[ #{war[:type].upcase} ] On the line #{war[:line]} #{war[:message]}".colorize(color: war[:color])
+  end
   puts message
-  puts errorHandler.errors
-  puts errorHandler.warnings
 
   # puts 'Incorect Indentation' if checker.line_indentation_errors != []
   # if answer == 'Y'

@@ -21,7 +21,7 @@ class ErrorHandler
   # A method to catch new error or warning
 
   def catch_err_warn(type, message, line)
-    color = type == 'error' ? 'red' : 'yellow'
+    color = type == 'error' ? :red : :yellow
     new_error= {
       :type => type,
       :color => color,

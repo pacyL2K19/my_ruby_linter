@@ -13,6 +13,7 @@ class Checker
 
   def validate(errHandler)
     empty_line_eof(errHandler)
+    check_indentation(errHandler)
     @lines.each_with_index do |n, i|
       parenthesis(errHandler, n, i)
       trailing_space(errHandler, n, i)
@@ -25,11 +26,20 @@ class Checker
   def check_indentation(errHolder)
     count = 0
     @lines.each_with_index do |line, index|
-      errHolder.catch_err_warn("warning", "should have #{@indentation} spaces", index+1) unless line.start_with?(' ' * (count * @indentation)) || line.strip == '' || (line.strip == 'end' && line.start_with?(' ' * [0, (count - 1)].max * @indentation))
+      if count == 0
+        errHolder.catch_err_warn("warning", "should have #{@indentation} spaces", index+1) if line.gsub(" ", "-").split("-")[0] == ""
+      else
+        puts "here"
+        errHolder.catch_err_warn("warning", "should have #{@indentation * count} spaces", index+1) unless line.strip == '' || (line.strip == 'end' && line.gsub(" ", "-").start_with?('-' * (count * @indentation)) && line.gsub(" ", "-").split("")[count * @indentation] != "-") || (line.gsub(" ", "-").start_with?("-" * (count * @indentation)) && line.gsub(" ", "-").split("")[count * @indentation] != "-")
+        #|| line.strip == '' || (line.strip == 'end' && line.start_with?(' ' * [0, (count - 1)].max * @indentation))
+        # puts line.gsub(" ", "-").start_with?("-" * (count * @indentation))
+        puts " line #{index} "
+        puts count
+        puts line.gsub(" ", "-").start_with?('-' * (count * @indentation))
+      end
       count += 1 if block?(line)
-      count -= 1 if line.strip == 'end'
+      count -= 1 if line.strip == 'end' || !block?(line)
       count = 0 if count.negative?
-      puts count
     end
   end
 
