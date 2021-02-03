@@ -1,3 +1,5 @@
+![](https://img.shields.io/badge/Microverse-blueviolet)
+
 ## Ruby linter
 > Ruby capstone project
 ## Description
