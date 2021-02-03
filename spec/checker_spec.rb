@@ -3,7 +3,6 @@ require './lib/error_handler'
 
 describe Checker do
   let(:checker) { Checker.new(File.readlines('test_bug.rb').map(&:chomp), 2) }
-  # let(:error_handler) {ErrorHandler.new}
 
   # the validate method it self contains all the methods
   describe '#validate' do
