@@ -17,7 +17,7 @@ file = gets.chomp
 error_handler = ErrorHandler.new
 
 if error_handler.valid_file?(file) != true
-  puts error_handler.valid_file?(file)
+  puts error_handler.valid_file?(file).colorize(color: :white, background: :red)
 else
   checker = Checker.new(File.readlines(file).map(&:chomp), indentation)
   puts ''
