@@ -1,5 +1,5 @@
-require_relative '../lib/checker'
-require_relative '../lib/error_handler'
+require './lib/checker'
+require './lib/error_handler'
 
 describe Checker do
   let(:checker) { Checker.new(File.readlines('test_bug.rb').map(&:chomp), 2) }
