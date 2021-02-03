@@ -4,7 +4,7 @@ module FileReader
     danger = :red
     warning = :yellow
     unless File.exist?(file_path)
-      return ' The specified file does not exist, pleqse enter a correct one '.colorize(color: :white,
+      return ' The specified file does not exist, please enter a correct one '.colorize(color: :white,
                                                                                         background: danger)
     end
     unless File.extname(file_path) == '.rb'
