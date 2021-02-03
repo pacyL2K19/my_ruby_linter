@@ -3,6 +3,9 @@ require_relative '../lib/checker'
 require_relative '../lib/error_handler'
 require_relative '../lib/modules/file_reader'
 
+# rubocop:disable Style/MixinUsage
+# rubocop:disable Layout/LineLength
+
 include FileReader
 
 indentation = 2
@@ -40,3 +43,5 @@ else
   puts message
 
 end
+# rubocop:enable Style/MixinUsage
+# rubocop:enable Layout/LineLength
