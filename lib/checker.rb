@@ -1,5 +1,5 @@
 require_relative './modules/checker_module'
-require_relative './modules/file_reader'
+require './lib/modules/file_reader'
 class Checker
   include CheckerModule
   attr_reader :lines, :indentation
