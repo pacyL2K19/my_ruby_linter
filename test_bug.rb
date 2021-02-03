@@ -1,5 +1,6 @@
-class Test
-  def method
+ 
+class Test 
+  def method(
     puts '# }'
-  end
-end
+   end
+ end

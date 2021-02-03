@@ -9,7 +9,7 @@ describe Checker do
   describe '#validate' do
     let(:error_handler) { ErrorHandler.new }
     it 'returns an array which contains a the list of all the errors and warning' do
-      expect(checker.validate(error_handler).errors.length).to eql(3)
+      expect(checker.validate(error_handler).errors.length).to eql(4)
     end
     it 'contains errors and warnings, their lenght are not supposed to be zero' do
       expect(checker.validate(error_handler).errors.size + checker.validate(error_handler).warnings.size).not_to eql(0)
