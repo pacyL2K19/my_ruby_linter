@@ -11,6 +11,7 @@ class Checker
     reset
   end
 
+  public
   def validate(errHandler)
     empty_line_eof(errHandler)
     check_indentation(errHandler)
@@ -31,8 +32,6 @@ class Checker
       else
         puts "here"
         errHolder.catch_err_warn("warning", "should have #{@indentation * count} spaces", index+1) unless line.strip == '' || (line.strip == 'end' && line.gsub(" ", "-").start_with?('-' * (count * @indentation)) && line.gsub(" ", "-").split("")[count * @indentation] != "-") || (line.gsub(" ", "-").start_with?("-" * (count * @indentation)) && line.gsub(" ", "-").split("")[count * @indentation] != "-")
-        #|| line.strip == '' || (line.strip == 'end' && line.start_with?(' ' * [0, (count - 1)].max * @indentation))
-        # puts line.gsub(" ", "-").start_with?("-" * (count * @indentation))
         puts " line #{index} "
         puts count
         puts line.gsub(" ", "-").start_with?('-' * (count * @indentation))
@@ -46,27 +45,11 @@ class Checker
   # rubocop:enable Layout/LineLength
 
   private
-
   def reset
     @errors = []
     @warning = []
   end
 
-  # def block_dictionary_creator(ret, line, index)
-  #   if line.block?
-  #     ret << [index + 1, (line.length - line.lstrip.length) / @indentation]
-  #   elsif line.include?('end')
-  #     ret.reverse.each do |m|
-  #       if m.length == 2 && ((line.length - line.lstrip.length) / @indentation) == m[1]
-  #         m << (index + 1)
-  #         break
-  #       end
-  #     end
-  #   end
-  #   ret
-  # end
-
-  # rubocop:disable Style/GuardClause
   public
   def trailing_space(errHolder, line, index)
     errHolder.catch_err_warn("error", "ends with trailing space", index+1) if line.end_with?(' ')
@@ -95,11 +78,4 @@ class Checker
     errHandler.catch_err_warn("warning", "File should have an empty line at the end", @lines.size) if @lines[-1].strip != ''
   end
 
-  # def block_length
-  #   @block_dictionary.each do |block|
-  #     if block.length < 3
-  #       @block_not_closed << "Block starting on line #{block[0]} is not closed"
-  #     end
-  #   end
-  # end
 end
