@@ -199,6 +199,6 @@ Feel free to check the [issues page](https://github.com/pacyL2K19/my_ruby_linter
 
 Give a ⭐️ if you like this project! 
 
-## License 
+## License
 
 This project is [MIT](lic.url) licensed.
