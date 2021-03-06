@@ -16,6 +16,7 @@ The aim of this project is to create my own linter file which is gonna detect er
 The linter returns errors and warning depending to the level of the issue in this format 
 
 ![screenshot](images/capst.PNG)
+
 ## Project Structure
 
 This project includes the following files:
@@ -104,7 +105,6 @@ if !bad?|
 
 ```
 end
-
 
 
 if something...
